@@ -1,0 +1,25 @@
+{
+  "name": "airbnb",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Seemon-ch/airbnb-website#readme",
+  "bugs": {
+    "url": "https://github.com/Seemon-ch/airbnb-website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seemon-ch/airbnb-website.git"
+  },
+  "license": "ISC",
+  "author": "Seemon",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.1"
+  }
+}
