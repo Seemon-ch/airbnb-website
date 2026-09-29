@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const path = require("path");
+const methodOverride = require('method-override')
 
 main().then(()=>{
     console.log("connected to database");
@@ -17,6 +18,7 @@ async function main(){
 app.set("view engine" ,"ejs");
 app.set("views" , path.join(__dirname , "views"));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 
 app.get("/", (req,res)=>{
     res.send("WELCOME TO ROOT PAGE");
@@ -39,12 +41,32 @@ app.post("/listings", async (req, res) => {
   res.redirect("/listings");
 });
 
+//edit route
+app.get("/listings/:id/edit",async (req,res)=>{
+     let{id} = req.params;
+    const listing = await Listing.findById(id);
+     res.render("listings/edit.ejs",{listing});
+})
+//update route
+app.put("/listings/:id" ,async (req,res)=>{
+     let{id} = req.params;
+     await Listing.findByIdAndUpdate(id,{...req.body.listing});
+     res.redirect(`/listings/${id}`);
+    });
+//delete Route
+app.delete("/listings/:id", async (req,res)=>{
+    let{id} = req.params;
+    let deletedListing = await  Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    res.redirect("/listings");
+})
 //show route 
 app.get("/listings/:id" ,async (req,res)=>{
     let{id} = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/show",{listing});
-})
+});
+
 //testing schema
 // app.get("/testListing" , async (req,res)=>{
 //     let sampleListing = new Listing({
